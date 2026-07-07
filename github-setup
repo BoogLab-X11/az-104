@@ -1,0 +1,17 @@
+gh login
+
+   39  mkdir az-104
+   40  cd az-
+   41  cd az-104/
+   42  exit
+   43  gh auth login
+   44  cat ../git-crib.txt 
+   45  git init
+   46  vi readme.md
+   47  git add .
+   48  git status
+   49  git commit -m "First commit"
+   50  git config --global user.email "boog@planetofnoise.com"
+   51  git config --global user.name "Andy Booth"
+   52  git commit -m "First commit"
+   53  gh repo create --public --source=. --remote=origin --push
