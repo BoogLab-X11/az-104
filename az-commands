@@ -1,0 +1,6 @@
+az login
+az account list-locations -otable
+az configure --defaults location=<location>
+az group create --name {name of your resource group} --location "{location}"
+az group list -otable
+
