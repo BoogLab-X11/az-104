@@ -48,4 +48,17 @@ az deployment group create --name $DeploymentName -g lab2RG --template-file $tem
 ; creates a blank deployment (no resources)
 ; run with lab2b-template.json to add a storage resource
 
+; lab2c adds parameters
+az deployment group create --name $DeploymentName -g lab2RG --template-file $templateFile --parameters storageName=igd234323424
+
+; we add more parameters to lab2c to limit storage type values and deploy with extra parameters
+
+az deployment group create --name $DeploymentName -g lab2RG --template-file $templateFile --parameters storageSKU=Standard_GRS storageName=igd9938576487638
+
+; adding an invalid parameter gives an error on deployment, eg --parameters storageSKU=Basic
+
+; added outputs to lab2c
+; decompiled to bicep with VSC - AC also works on resource groups (!)
+
+az deployment group create -n lab2Bicep -g bicepTest -f lab2c-template.bicep -p storageSKU=Standard_GRS storageName=igd9938576487638
 
