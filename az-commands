@@ -1,7 +1,11 @@
 az logout
 az login ;follow instructions
 az account list-locations -otable
+
 az configure --defaults location=<location>
+az configure --defaults group="<resource-group-name>"
+; if set you can leave -g and -l from commands
+
 az group create --name {name of your resource group} --location "{location}"
 az group list -otable
 az configure --defaults location=<location> ;don't need --location after setting
@@ -32,5 +36,16 @@ az deployment group create -g lab1RG --template-file lab1-template.bicep
 
 templateFile="boogIsCool!"
 echo $templateFile 
+
+az group create -n lab2RG
+
+templateFile="lab2-template.json"
+today=$(date +"%d-%b-%Y")
+DeploymentName="lab2-template-"$today
+
+az deployment group create --name $DeploymentName -g lab2RG --template-file $templateFile
+
+; creates a blank deployment (no resources)
+; run with lab2b-template.json to add a storage resource
 
 
