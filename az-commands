@@ -1,6 +1,36 @@
-az login
+az logout
+az login ;follow instructions
 az account list-locations -otable
 az configure --defaults location=<location>
 az group create --name {name of your resource group} --location "{location}"
 az group list -otable
+az configure --defaults location=<location> ;don't need --location after setting
+az group delete -n <groupName>
+
+az deployment group create --name blanktemp --resource-group lab1RG --template-file lab1-template.json
+
+az resource delete -g lab1RG --resource-type "Microsoft.Storage/storageAccounts" -n "wibblywobbly123"
+
+az bicep decompile --file lab1-template.json ; creates a .bicep translation
+
+az deployment group create --name blanktemp --resource-group lab1RG --template-file lab1-template.bicep
+
+az deployment group list   --resource-group lab1RG   --output table
+; shows deployment record, eg blanktemp
+
+az deployment group create -g lab1RG --template-file lab1-template.bicep
+; miss out --name creates record with 'lab1-template'
+
+
+-g   --resource-group
+-n   --name
+-l   --location
+-s   --subscription
+-f   --template-file
+-p   --parameters
+-o   --output
+
+templateFile="boogIsCool!"
+echo $templateFile 
+
 
