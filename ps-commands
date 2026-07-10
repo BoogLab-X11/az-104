@@ -1,0 +1,64 @@
+Disconnect-AzAccount
+Connect-AzAccount    # follow instructions
+Get-AzLocation | Format-Table #lists locations
+
+# no direct equivalent of az configure defaults; default location is assumed to be ukwest
+
+New-AzResourceGroup -n <group-name> -l <location>
+Get-AzResourceGroup | Format-Table
+Get-AzResourceGroup | ft 
+Get-AzResourceGroup | ft ResourceGroupName, Location
+
+# no direct equivalent of az configure defaults
+
+Remove-AzResourceGroup -n <groupName>
+
+New-AzResourceGroup -n lab1RG -l ukwest
+
+New-AzResourceGroupDeployment -Name blanktemp -ResourceGroupName lab1RG -TemplateFile lab1-template.json
+
+Remove-AzResource -ResourceGroupName lab1RG -ResourceType "Microsoft.Storage/storageAccounts" -Name "wibblywobbly123" -Force
+
+bicep decompile lab1-template.json    # creates a .bicep translation
+
+New-AzResourceGroupDeployment -Name blanktemp -ResourceGroupName lab1RG -TemplateFile lab1-template.bicep
+
+Get-AzResourceGroupDeployment -ResourceGroupName lab1RG
+# shows deployment record, eg blanktemp
+
+New-AzResourceGroupDeployment -ResourceGroupName lab1RG -TemplateFile lab1-template.bicep
+# omit -Name to let Azure generate a deployment name
+
+# CLI shorthand equivalents:
+# -g  -> -ResourceGroupName
+# -n  -> -Name
+# -l  -> -Location
+# -f  -> -TemplateFile
+
+$templateFile = "boogIsCool!"
+$templateFile
+
+New-AzResourceGroup -n lab2RG -l ukwest
+
+$templateFile = "lab2-template.json"
+$today = Get-Date -Format "dd-MMM-yyyy"
+$DeploymentName = "lab2-template-$today"
+
+New-AzResourceGroupDeployment -Name $DeploymentName -ResourceGroupName lab2RG -TemplateFile $templateFile
+
+# creates a blank deployment (no resources)
+# run with lab2b-template.json to add a storage resource
+
+# lab2c adds parameters
+New-AzResourceGroupDeployment -Name $DeploymentName -ResourceGroupName lab2RG -TemplateFile $templateFile -storageName igd234323424
+
+# more parameters to limit storage type values and deploy with extra parameters
+
+New-AzResourceGroupDeployment -Name $DeploymentName -ResourceGroupName lab2RG -TemplateFile $templateFile -storageSKU Standard_GRS -storageName igd9938576487638
+
+# invalid parameter values will fail deployment, eg -storageSKU Basic
+
+# added outputs to lab2c
+# decompiled to bicep with VS Code
+
+New-AzResourceGroupDeployment -Name lab2Bicep -ResourceGroupName bicepTest -TemplateFile lab2c-template.bicep -storageSKU Standard_GRS -storageName igd9938576487638
